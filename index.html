@@ -44,7 +44,7 @@
     <div ng-if="breeders.length <= 20">
       <h3>{{breeders.length}} breeders:</h3>
       <div ng-repeat="sql in breeders" class="sql {{sql.active ? 'active':''}} {{sql.hurt ? 'hurt':''}}">
-          <img class="breeder pic" src="breeder2.jpg"/><span class="level">{{sql.level}}</span> <span class="timer">{{30 - 2*sql.level - sql.timer}}</span>
+          <img class="breeder pic" src="breeder.jpg"/><span class="level">{{sql.level}}</span> <span class="timer">{{30 - 2*sql.level - sql.timer}}</span>
       </div>
     </div>
     <div ng-if="trainers.length > 20">
