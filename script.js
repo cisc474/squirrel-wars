@@ -24,7 +24,7 @@ var Squirrel = function(start){
   this.levelUp = function(){
     if (that.level < 10){
       that.level += 1;
-      that.counter = 30 - 2*that.level;
+      that.counter = 32 - 2*that.level;
     }
   };
   
@@ -33,7 +33,7 @@ var Squirrel = function(start){
       that.$scope.message = "You have beed attacked, "+
         "squirrel level down.";
       that.level -= 1;
-      that.counter = 30 - 2*that.level;
+      that.counter = 32 - 2*that.level;
       that.hurt = true;
     } else {
       that.$scope.deadSquirrel(that);
