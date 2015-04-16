@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <link data-require="bootstrap@*" data-semver="3.3.2" rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" />
+    <script data-require="angular.js@*" data-semver="1.4.0-rc.0" src="//code.angularjs.org/1.4.0-rc.0/angular.js"></script>
+    <script data-require="jquery@2.1.3" data-semver="2.1.3" src="//code.jquery.com/jquery-2.1.3.min.js"></script>
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js"></script>
+  </head>
+
+  <body data-ng-app="squirrels" data-ng-controller="Ctrl">
+    <h1>Squirrel Wars</h1>
+    <p>You are a level {{level}} squirrel master, you have {{nuts}} nuts.</p>
+    <p>Manual spawn time: {{31-level}} seconds.</p>
+    <div ng-if="!gameover">
+    <p>
+      <button type="button" ng-click="resetTimer(250)" class="btn btn-small{{rate === 250 ? ' btn-danger' : ' btn-std' }}">TimeX4</button>
+      <button type="button" ng-click="resetTimer(1000)" class="btn btn-small{{rate === 1000 ? ' btn-danger' : ' btn-std' }}">TimeX1</button>
+    </p>
+    <hr/>
+    <div ng-if="new_ready">
+      <h3>Create a Squirrel:</h3>
+      <button type="button" ng-click="make('soldier')" class="btn btn-large btn-danger">New Soldier</button>
+      <button type="button" ng-click="make('trainer')" class="btn btn-large btn-info">New Trainer</button>
+      <button type="button" ng-click="make('breeder')" class="btn btn-large btn-success">New Breeder</button>
+    </div>
+    <div>
+      <h3 ng-if="!new_ready">Create again in {{timer}} seconds...</h3>
+    </div>
+    <hr/>
+    <div ng-if="army.length > 20">
+    <h3>You have {{army.length}} soldier squirrel(s)</h3>
+    </div>
+    <div ng-if="army.length <= 20">
+      <h3>{{army.length}} soldiers:</h3>
+      <div ng-repeat="sql in army" class="sql {{sql.active ? 'active':''}} {{sql.hurt ? 'hurt':''}}">
+          <img class="soldier pic" src="soldier.jpg"/><span class="level">{{sql.level}}</span> <span class="timer">{{30 - 2*sql.level - sql.timer}}</span>
+      </div>
+    </div>
+    <div ng-if="breeders.length > 20">
+    <h3>You have {{breeders.length}} breeder squirrel(s)</h3>
+    </div>
+    <div ng-if="breeders.length <= 20">
+      <h3>{{breeders.length}} breeders:</h3>
+      <div ng-repeat="sql in breeders" class="sql {{sql.active ? 'active':''}} {{sql.hurt ? 'hurt':''}}">
+          <img class="breeder pic" src="breeder2.jpg"/><span class="level">{{sql.level}}</span> <span class="timer">{{30 - 2*sql.level - sql.timer}}</span>
+      </div>
+    </div>
+    <div ng-if="trainers.length > 20">
+    <h3>You have {{trainers.length}} trainer squirrel(s)</h3>
+    </div>
+    <div ng-if="trainers.length <= 20">
+      <h3>{{trainers.length}} trainers:</h3>
+      <div ng-repeat="sql in trainers" class="sql {{sql.active ? 'active':''}} {{sql.hurt ? 'hurt':''}}">
+          <img class="trainer pic" src="trainer.jpg"/><span class="level">{{sql.level}}</span> <span class="timer">{{30 - 2*sql.level - sql.timer}}</span>
+      </div>
+    </div>
+    <hr>
+    </div>
+    <h4>{{message}}</h4>
+    <div ng-if="!gameover">
+    <hr>
+    <h4>You face a level {{monster_level}} nut-monster.</h4>
+    <h4>It has {{monster.health}} health.</h4>
+    </div>
+  </body>
+</html>
