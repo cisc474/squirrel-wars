@@ -64,7 +64,12 @@
     </div>
     <hr>
     </div>
-    <h4>{{message}}</h4>
+    <div ng-if="!gameover">
+        <h4>{{message}}</h4>
+    </div>
+    <div ng-if="gameover">
+        <h4>{{gameovermessage}}</h4>
+    </div>
     <div ng-if="!gameover">
     <hr>
     <h4>You face a level {{monster_level}} nut-monster.</h4>

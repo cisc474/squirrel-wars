@@ -11,6 +11,7 @@ var Squirrel = function(start){
   this.active = false;
   this.hurt = false;
   this.dead = false;
+  this.gameovermessage = "Game over.";
   var that = this;
   //every game object needs an update function which gets run every tick
   this.update = function(){
@@ -33,7 +34,7 @@ var Squirrel = function(start){
   //when they get attacked they level down and possibly die
   this.levelDown = function(){
     if (that.level > 1){
-      that.$scope.message = "You have beed attacked, "+
+      that.$scope.message = "You have been attacked, "+
         "squirrel level down.";
       that.level -= 1;
       that.counter = 32 - 2*that.level;
@@ -174,13 +175,13 @@ app.controller("Ctrl", ["$scope", function($scope){
   $scope.gameLost = function(){
     $scope.gameover = true;
     window.clearInterval(intID);
-    $scope.message = "You have lost your nuts!  Game over...";
+    $scope.gameovermessage = "You have lost your nuts!  Game over...";
   };
 
   $scope.gameWon = function(){
     $scope.gameover = true;
     window.clearInterval(intID);
-    $scope.message = "You have 100000 nuts!  You win.";
+    $scope.gameovermessage = "You have 100000 nuts!  You win.";
   };
   
   $scope.resetTimer = function(time){
