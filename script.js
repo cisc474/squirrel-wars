@@ -1,5 +1,7 @@
 var app = angular.module('squirrels', []);
 
+//the main squirrel class, from type to type I adjust the 'action' that happens every 32 - 2*level ticks
+
 var Squirrel = function(start){
   this.type = start.type;
   this.$scope = start.$scope;
@@ -10,6 +12,7 @@ var Squirrel = function(start){
   this.hurt = false;
   this.dead = false;
   var that = this;
+  //every game object needs an update function which gets run every tick
   this.update = function(){
     that.timer = (that.timer + 1) % that.counter;
     if (that.timer > 3){
@@ -20,14 +23,14 @@ var Squirrel = function(start){
       that.active = true;
     }
   };
-  
+  //I want my squirrels to level up, I capped them at level 10
   this.levelUp = function(){
     if (that.level < 10){
       that.level += 1;
       that.counter = 32 - 2*that.level;
     }
   };
-  
+  //when they get attacked they level down and possibly die
   this.levelDown = function(){
     if (that.level > 1){
       that.$scope.message = "You have beed attacked, "+
@@ -40,7 +43,7 @@ var Squirrel = function(start){
       that.dead = true;
     }
   };
-  
+  //soldiers attack, trainers train, breeders breed
   this.action = function(){
     if (that.type == "soldier"){
       that.$scope.attack(that);
@@ -52,6 +55,7 @@ var Squirrel = function(start){
   };
 };
 
+//monsters attack every 40-level ticks
 var Monster = function(level, $scope){
   this.$scope = $scope;
   this.health = level*10;
@@ -74,6 +78,7 @@ var remove_from = function(arr, obj){
   }
 };
 
+//my pub/sub/hub join into the ticker or remove yourself, get update called whenever this updates
 var Updater = function(){
   this.hooks = [];
   var that = this;
@@ -108,6 +113,7 @@ app.controller("Ctrl", ["$scope", function($scope){
   $scope.monster = new Monster($scope.monster_level, $scope);
   $scope.updater.join($scope.monster);
   
+  //the game brains updater
   $scope.update = function(){
     if ($scope.timer > 0){
       $scope.timer = $scope.timer - 1;
@@ -120,6 +126,7 @@ app.controller("Ctrl", ["$scope", function($scope){
   
   $scope.updater.join($scope);
   
+  //also players can level up
   $scope.levelUp = function(){
       $scope.monster_level += 1;
       $scope.updater.remove($scope.monster);
@@ -161,6 +168,7 @@ app.controller("Ctrl", ["$scope", function($scope){
     $scope.$apply();
   };
   
+  //this is where I turn on the ticker, it is currently running at x2 speed
   var intID = window.setInterval($scope.updater.update, 500);
   
   $scope.gameLost = function(){
